@@ -1,5 +1,5 @@
 import express from "express";
-import redisClient from "./config/redis.js";
+import userRouter from "./router/user.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,6 +12,8 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to the Redis Node API" });
 });
 
+// Use the router
+app.use("/api/v1/users", userRouter);
 
 // Start Server
 app.listen(PORT, () => {
