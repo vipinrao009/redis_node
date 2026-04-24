@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:latest
+    container_name: production-redis
+    ports:
+      - "6380:6379" # Mapping port 6380 to Redis default 6379
+    volumes:
+      - ./redis-data:/data # Data will be saved in 'redis-data' folder on your PC
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD} # Password for security
+    restart: always

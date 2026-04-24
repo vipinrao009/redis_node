@@ -2,9 +2,11 @@ import { createClient } from "redis";
 import "dotenv/config"; // Load environment variables
 
 const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379';
+const REDIS_PASSWORD = process.env.REDIS_PASSWORD;
 
 const redisClient = createClient({
-  url: REDIS_URL
+  url: REDIS_URL,
+  password: REDIS_PASSWORD // Adding password for production security
 });
 
 // Production Best Practice: Detailed Event Listeners
