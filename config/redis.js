@@ -6,7 +6,17 @@ const REDIS_PASSWORD = process.env.REDIS_PASSWORD;
 
 const redisClient = createClient({
   url: REDIS_URL,
-  password: REDIS_PASSWORD // Adding password for production security
+  password: REDIS_PASSWORD,
+  socket: {
+    // Shanti Strategy: Itna shor mat machao! 🤫
+    reconnectStrategy: (retries) => {
+      if (retries > 10) {
+        console.log("⚠️ Redis: Max retries reached. Waiting 30s before trying again.");
+        return 30000;
+      }
+      return Math.min(retries * 500, 5000);
+    }
+  }
 });
 
 // Production Best Practice: Detailed Event Listeners

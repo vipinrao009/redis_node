@@ -53,7 +53,29 @@ Redis RAM par chalta hai, toh restart par data udd sakta hai. Isse bachne ke liy
 
 ---
 
-## 📅 Next Lesson: Rate Limiting
-Ab hum seekhenge ki kaise Redis ka use karke hum apni API ko DDoS attacks aur heavy traffic se bacha sakte hain.
+## 6. 🛡️ Rate Limiting (API Security)
+*   **Problem**: Hacker hazaron requests bhej kar server crash kar sakta hai.
+*   **Solution**: Redis mein user ka IP track karna aur limit lagana (e.g., 5 requests per minute).
+*   **Commands Used**:
+    *   `INCR key`: Ye key ki value ko 1 se badha deta hai (Atomically).
+    *   `EXPIRE key 60`: Timer set karne ke liye.
+*   **Why Redis for this?**: Agar aapke paas 5 alag-alag servers hain, toh wo sab ek hi Redis se count check karenge. Express variables ye kaam nahi kar sakte.
 
-**Teacher's Tip**: Practice makes perfect. In concepts ko apne dosto ko samjhayein, tabhi aapka dimaag aur clear hoga! 👨‍🏫✨
+## 7. 🤫 Reconnection Strategy (Exponential Backoff)
+Jab Redis down ho, toh app ko pagal ki tarah baar-baar (every millisecond) try nahi karna chahiye.
+*   Hum `reconnectStrategy` use karte hain taaki pehle 1s, fir 2s, fir 5s ka gap ho.
+*   Isse server par load kam padta hai aur terminal logs saaf rehte hain.
+
+---
+
+## ❓ FAQ: Advanced Doubts
+
+### Q: Express variables se bhi toh rate limit kar sakte the?
+**A**: Haan, lekin sirf tab jab aapka 1 hi server ho. Badi apps mein hazaron servers hote hain, aur unhe ek "Shared Brain" (Redis) chahiye hota hai ye yaad rakhne ke liye ki kis user ne kitni requests bhej di hain.
+
+### Q: Redis data file (AOF) itni ajeeb kyu dikhti hai?
+**A**: Wo "Redis Protocol" (RESP) hai. Redis har command ko usi format mein save karta hai taaki restart hone par wo unhe jaldi se "Replay" kar sake.
+
+---
+
+**CONGRATULATIONS!** 🎓 Aapne Redis ka basic-to-production course complete kar liya hai. Ab aap ready hain real-world projects banane ke liye! 🚀🦾✨
